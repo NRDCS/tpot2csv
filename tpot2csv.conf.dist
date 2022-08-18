@@ -20,7 +20,6 @@ Listen 443
 
                 ServerAdmin server_admin_mail_to_change 
                 DocumentRoot /usr/local/apache2/htdocs
-                Alias "/feed.csv" "/opt/tpot2csv/output.csv"
 
                 # CIS Benchmarks, Apache, 5.9
                 RewriteEngine On
@@ -36,7 +35,7 @@ Listen 443
                 ServerName server_name_to_change
 
                 ErrorLog /usr/local/apache2/logs/error.log
-                CustomLog /usr/local/apache2/logs/access.log vhost_combined
+                CustomLog /usr/local/apache2/logs/access.log combined
                 # CIS benchmarks, Apache, 6.2,6.3
 
                 SSLEngine on
