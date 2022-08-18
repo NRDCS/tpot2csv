@@ -12,28 +12,29 @@ ServerTokens Prod
 
 #CIS benchmarks, Apache, 7.6
 SSLInsecureRenegotiation Off
+Listen 443
 
 <IfModule mod_ssl.c>
-        <VirtualHost _default_:80>
-                ServerAdmin server_admin_mail_to_change
-                ServerName server_name_to_change 
-                <FilesMatch "^.*$">
-                        Require all granted
-                </FilesMatch>
-                RewriteEngine on
-                # CIS benchmarks Apache, 5.9
-                RewriteCond %{THE_REQUEST} !HTTP/1\.1$
-                RewriteRule .* - [F]
-                # CIS Benchmarks, Apache, 5.12
-                RewriteCond %{HTTP_HOST} !^server\.name\.to\.change [NC]
-                RewriteCond %{REQUEST_URI} !^/error [NC]
-                RewriteRule ^.(.*) - [L,F]
-                # CIS benchmark, Apache, 7.9
-                RewriteCond %{SERVER_NAME} =server_name_to_change
-                RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
-                CustomLog /usr/local/apache2/logs/other_vhosts_access.log combined
-                ErrorLog /usr/local/apache2/logs/error.log
-        </VirtualHost>
+#        <VirtualHost _default_:80>
+#                ServerAdmin server_admin_mail_to_change
+#                ServerName server_name_to_change 
+#                <FilesMatch "^.*$">
+#                        Require all granted
+#                </FilesMatch>
+#                RewriteEngine on
+#                # CIS benchmarks Apache, 5.9
+#                RewriteCond %{THE_REQUEST} !HTTP/1\.1$
+#                RewriteRule .* - [F]
+#                # CIS Benchmarks, Apache, 5.12
+#                RewriteCond %{HTTP_HOST} !^server\.name\.to\.change [NC]
+#                RewriteCond %{REQUEST_URI} !^/error [NC]
+#                RewriteRule ^.(.*) - [L,F]
+#                # CIS benchmark, Apache, 7.9
+#                RewriteCond %{SERVER_NAME} =server_name_to_change
+#                RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+#                CustomLog /usr/local/apache2/logs/access.log combined
+#                ErrorLog /usr/local/apache2/logs/error.log
+#        </VirtualHost>
 
         <VirtualHost _default_:443>
 
@@ -54,8 +55,8 @@ SSLInsecureRenegotiation Off
                 AddDefaultCharset UTF-8
                 ServerName server_name_to_change
 
-                ErrorLog /usr/local/apache2/logs/apache2/error.log
-                CustomLog /usr/local/apache2/logs/apache2/access.log vhost_combined
+                ErrorLog /usr/local/apache2/logs/error.log
+                CustomLog /usr/local/apache2/logs/access.log vhost_combined
                 # CIS benchmarks, Apache, 6.2,6.3
 
                 SSLEngine on
