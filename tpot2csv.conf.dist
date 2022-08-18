@@ -8,7 +8,7 @@ ServerSignature Off
 ServerTokens Prod
 
 #CIS benchmarks, Apache, 7.7
-SSLCompression off
+#SSLCompression off
 
 #CIS benchmarks, Apache, 7.6
 SSLInsecureRenegotiation Off
