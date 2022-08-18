@@ -1,0 +1,32 @@
+version: "2.4"
+networks:
+   etc_default:
+     external: true
+
+services:
+  tpot2csv:
+    container_name: tpot2csv
+    restart: always
+    ulimits:
+      nofile:
+        soft: 512
+        hard: 1024
+      nproc:
+        soft: 256
+        hard: 256
+    pids_limit: 70
+    cpu_shares: 512
+    mem_limit: 1g
+
+    build: .
+    ports:
+#      - "127.0.0.1:65008:80"
+      - "65003:443"
+    volumes:
+      - "/data/nginx/cert/nginx.crt:/usr/local/apache2/conf/server.crt:ro"
+      - "/data/nginx/cert/nginx.key:/usr/local/apache2/conf/server.key:ro"
+      - "/data/tpot2csv/log:/usr/local/apache2/logs:rw"
+    networks:
+      - etc_default
+
+
