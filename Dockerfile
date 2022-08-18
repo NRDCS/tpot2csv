@@ -19,9 +19,10 @@ COPY cronscript /etc/periodic/15min/
 
 # Adding apache configuration
 COPY httpd.conf /usr/local/apache2/conf/
+COPY tpot2csv.conf /usr/local/apache2/conf/
 
 # Setting up startup script for the services
-#RUN sed -i -e 's/^set -e/set -e\ncrond -l 2\n/' /usr/local/bin/httpd-foreground
+RUN sed -i -e 's/^set -e/set -e\ncrond -l 2\n/' /usr/local/bin/httpd-foreground
 
 # Run apache together with cron
-CMD ["/bin/bash", "-c", "/usr/sbin/crond -l 2 && /usr/local/bin/httpd-foreground"]
+CMD ["/usr/local/bin/httpd-foreground"]
