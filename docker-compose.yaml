@@ -20,8 +20,8 @@ services:
 
     build: .
     ports:
-      - "127.0.0.1:65008:80"
-      - "127.0.0.1:65003:443"
+#      - "127.0.0.1:65008:80"
+      - "65003:443"
     volumes:
       - "/data/nginx/cert/nginx.crt:/usr/local/apache2/conf/server.crt:ro"
       - "/data/nginx/cert/nginx.key:/usr/local/apache2/conf/server.key:ro"
