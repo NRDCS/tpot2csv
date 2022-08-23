@@ -7,6 +7,11 @@ services:
   tpot2csv:
     container_name: tpot2csv
     restart: always
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/tmp
+      - /run
     ulimits:
       nofile:
         soft: 512
@@ -20,13 +25,14 @@ services:
 
     build: .
     ports:
-#      - "127.0.0.1:65008:80"
       - "65003:443"
     volumes:
       - "/data/nginx/cert/nginx.crt:/usr/local/apache2/conf/server.crt:ro"
       - "/data/nginx/cert/nginx.key:/usr/local/apache2/conf/server.key:ro"
       - "/data/tpot2csv/log:/usr/local/apache2/logs:rw"
+      - "/data/tpot2csv/data:/usr/local/apache2/htdocs/data:rw"
     networks:
       - etc_default
+      
 
 
