@@ -6,6 +6,7 @@ networks:
 services:
   tpot2csv:
     container_name: tpot2csv
+    image: tpot2csv
     restart: always
     read_only: true
     env_file: .env
@@ -35,7 +36,7 @@ services:
     networks:
       - etc_default
     healthcheck:
-      test: ["CMD-SHELL", "wget -O - -q --no-check-certificate --header 'Host:${SERVER_NAME}' https://localhost 2>/dev/null > /dev/null || exit 1"]
+      test: ["CMD-SHELL", "/usr/bin/wget -O - -q --no-check-certificate --header 'Host:${SERVER_NAME}' https://localhost 2>/dev/null > /dev/null || exit 1"]
       interval: 300s
       timeout: 5s
       start_period: 30s
