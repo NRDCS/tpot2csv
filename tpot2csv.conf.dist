@@ -1,0 +1,56 @@
+#CIS benchmarks, Apache, 9.6,9.5
+RequestReadTimeout header=20-40,MinRate=500 body=10,MinRate=500
+
+#CIS benchmarks, Apache, 8.2
+ServerSignature Off
+
+#CIS benchmarks, Apache, 8.1
+ServerTokens Prod
+
+#CIS benchmarks, Apache, 7.7
+#SSLCompression off
+
+#CIS benchmarks, Apache, 7.6
+SSLInsecureRenegotiation Off
+Listen 443
+
+<IfModule mod_ssl.c>
+
+        <VirtualHost _default_:443>
+
+                ServerAdmin server_admin_mail_to_change 
+                DocumentRoot /usr/local/apache2/htdocs
+
+                # CIS Benchmarks, Apache, 5.9
+                RewriteEngine On
+                RewriteOptions Inherit
+                # CIS benchmarks Apache, 5.9
+                RewriteCond %{THE_REQUEST} !HTTP/1\.1$
+                RewriteRule .* - [F]
+                # CIS Benchmarks, Apache, 5.12
+                RewriteCond %{HTTP_HOST} !^server\.name\.to\.change [NC]
+                RewriteCond %{REQUEST_URI} !^/error [NC]
+                RewriteRule ^.(.*) - [L,F]
+                AddDefaultCharset UTF-8
+                ServerName server_name_to_change
+
+                ErrorLog /usr/local/apache2/logs/error.log
+                CustomLog /usr/local/apache2/logs/access.log combined
+                # CIS benchmarks, Apache, 6.2,6.3
+
+                SSLEngine on
+                SSLCertificateFile      /usr/local/apache2/conf/server.crt
+                SSLCertificateKeyFile   /usr/local/apache2/conf/server.key
+
+                SSLProtocol -all +TLSv1.2 +TLSv1.3
+                SSLInsecureRenegotiation off
+                SSLHonorCipherOrder on
+                SSLCipherSuite          ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA
+                <FilesMatch "\.(cgi|shtml|phtml|php)$">
+                                SSLOptions +StdEnvVars
+                </FilesMatch>
+                <Directory /usr/lib/cgi-bin>
+                                SSLOptions +StdEnvVars
+                </Directory>
+        </VirtualHost>
+</IfModule>

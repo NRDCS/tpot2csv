@@ -1,0 +1,92 @@
+{
+    "aggs": {
+      "2": {
+        "terms": {
+          "field": "src_ip.keyword",
+          "order": {
+            "1": "desc"
+          },
+          "size": 100000
+        },
+        "aggs": {
+          "1": {
+            "max": {
+              "field": "@timestamp"
+            }
+          }
+        }
+      }
+    },
+    "size": 0,
+    "fields": [
+      {
+        "field": "@timestamp",
+        "format": "date_time"
+      },
+      {
+        "field": "end_time",
+        "format": "date_time"
+      },
+      {
+        "field": "flow.start",
+        "format": "date_time"
+      },
+      {
+        "field": "start_time",
+        "format": "date_time"
+      },
+      {
+        "field": "time_iso8601",
+        "format": "date_time"
+      },
+      {
+        "field": "timestamp",
+        "format": "date_time"
+      },
+      {
+        "field": "tls.notafter",
+        "format": "date_time"
+      },
+      {
+        "field": "tls.notbefore",
+        "format": "date_time"
+      }
+    ],
+    "script_fields": {},
+    "stored_fields": [
+      "*"
+    ],
+    "runtime_mappings": {},
+    "_source": {
+      "excludes": []
+    },
+    "query": {
+      "bool": {
+        "must": [],
+        "filter": [
+          {
+            "bool": {
+              "should": [
+                {
+                  "match": {
+                    "type": "Adbhoney Ciscoasa CitrixHoneypot ConPot Cowrie Ddospot Dicompot Dionaea ElasticPot Endlessh Glutton Hellpot Heralding Honeytrap Honeypots Log4pot Ipphoney Mailoney Medpot Redishoneypot Tanner Wordpot"
+                  }
+                }
+              ],
+              "minimum_should_match": 1
+            }
+          },
+          {
+            "range": {
+              "@timestamp": {
+                "format": "strict_date_optional_time",
+                "gte": "now-24H"
+              }
+            }
+          }
+        ],
+        "should": [],
+        "must_not": []
+      }
+    }
+  }
