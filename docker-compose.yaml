@@ -8,6 +8,7 @@ services:
     container_name: tpot2csv
     restart: always
     read_only: true
+    env_file: .env
     tmpfs:
       - /tmp
       - /var/tmp
@@ -33,6 +34,14 @@ services:
       - "/data/tpot2csv/data:/usr/local/apache2/htdocs/data:rw"
     networks:
       - etc_default
+    healthcheck:
+      test: ["CMD-SHELL", "wget -O - -q --no-check-certificate --header 'Host:${SERVER_NAME}' https://localhost 2>/dev/null > /dev/null || exit 1"]
+      interval: 300s
+      timeout: 5s
+      start_period: 30s
+      
+
+      
       
 
 
