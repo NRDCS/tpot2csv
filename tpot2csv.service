@@ -1,0 +1,16 @@
+[Unit]
+Description=tpot2csv
+Requires=tpot.service
+After=tpot.service
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutSec=infinity
+
+ExecStart=/usr/bin/docker-compose -f /opt/tpot2csv/docker-compose.yaml up --no-color
+
+ExecStop=/usr/bin/docker-compose -f /opt/tpot2csv/docker-compose.yaml down -v
+
+[Install]
+WantedBy=multi-user.target
