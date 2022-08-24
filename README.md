@@ -9,6 +9,7 @@ Use `.env.dist` to create actual `.env` file (adjust virtual host name and email
 cp .env.dist .env
 vi .env
 ./install.sh
+systemctl start tpot2csv
 ```
 
 ## Notes:
