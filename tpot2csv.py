@@ -9,6 +9,7 @@ import json
 import csv
 import syslog
 import configparser
+import os
 
 config=configparser.ConfigParser()
 config.read('tpot2csv.ini')
@@ -44,5 +45,6 @@ if response.status_code == 200 and 'took' in response.text:
             col1 = item['1']['value_as_string']
             col2 = item['key']
             filewriter.writerow([col1,col2])
+        os.chmod(outputfile, 0o644)
 else:
     syslog.syslog(syslog.LOG_ERR, response.text)
