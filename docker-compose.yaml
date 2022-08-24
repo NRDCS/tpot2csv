@@ -19,9 +19,9 @@ services:
         soft: 512
         hard: 1024
       nproc:
-        soft: 256
-        hard: 256
-    pids_limit: 70
+        soft: 8192
+        hard: 8192
+    pids_limit: 200
     cpu_shares: 512
     mem_limit: 1g
 
