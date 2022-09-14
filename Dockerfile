@@ -21,6 +21,10 @@ COPY cronscript /etc/periodic/15min/
 COPY httpd.conf /usr/local/apache2/conf/
 COPY tpot2csv.conf /usr/local/apache2/conf/
 
+# Setting up group to enable apache read feed file
+RUN addgroup -g 2000 tpot
+RUN addgroup www-data tpot
+
 # Setting up startup script for the services
 RUN sed -i -e 's/^set -e/set -e\ncrond -l 2\n/' /usr/local/bin/httpd-foreground
 
