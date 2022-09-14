@@ -36,10 +36,10 @@ services:
     networks:
       - etc_default
     healthcheck:
-      test: ["CMD-SHELL", "/usr/bin/wget -O - -q --no-check-certificate --header 'Host:${SERVER_NAME}' https://localhost 2>/dev/null > /dev/null || exit 1"]
-      interval: 300s
+      test: /usr/bin/pgrep -x httpd 2>/dev/null > /dev/null && /usr/bin/pgrep -x crond 2>/dev/null > /dev/null
+      interval: 30s
       timeout: 5s
-      start_period: 30s
+      start_period: 10s
       
 
       
