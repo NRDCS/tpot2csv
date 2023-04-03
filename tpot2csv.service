@@ -1,6 +1,6 @@
 [Unit]
 Description=tpot2csv
-Requires=tpot.service
+#Requires=tpot.service
 After=tpot.service
 
 [Service]
