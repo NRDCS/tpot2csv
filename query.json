@@ -60,33 +60,22 @@
     "_source": {
       "excludes": []
     },
-    "query": {
-      "bool": {
-        "must": [],
-        "filter": [
-          {
-            "bool": {
-              "should": [
-                {
-                  "match": {
-                    "type": "Adbhoney Ciscoasa CitrixHoneypot ConPot Cowrie Ddospot Dicompot Dionaea ElasticPot Endlessh Glutton Hellpot Heralding Honeytrap Honeypots Log4pot Ipphoney Mailoney Medpot Redishoneypot Tanner Wordpot"
-                  }
-                }
-              ],
-              "minimum_should_match": 1
+    "query":{  
+      "bool":{  
+         "filter":[{  
+            "bool":{  
+               "should":[
+                {"bool":{"must": [{ "match_phrase": {"type.keyword": "Cowrie"} },
+                    { "exists": {"field": "method.keyword"} }]}},
+                {"bool":{"must":[{ "match_phrase": {"type.keyword": "Mailoney"} },
+                    {"match_phrase": {"message": "login attempt*"}}]}},
+                {"bool":{"must":[{"match_phrase": {"type.keyword": "Tanner"}},
+                    {"exists": {"field": "method.keyword"}}]}}
+               ]
             }
-          },
-          {
-            "range": {
-              "@timestamp": {
-                "format": "strict_date_optional_time",
-                "gte": "now-24H"
-              }
-            }
-          }
-        ],
-        "should": [],
-        "must_not": []
+         },
+         {"range": {"@timestamp": {"format": "strict_date_optional_time","gte": "now-24H","lte": "now"}}}
+         ]
       }
-    }
+   }
   }
