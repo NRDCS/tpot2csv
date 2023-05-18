@@ -130,3 +130,5 @@ dmypy.json
 
 # conf files
 tpot2csv.conf
+*.bak.json
+*.new.json
