@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
 cd /opt/tpot2csv/
-./tpot2csv.py
+/usr/bin/python3 ./tpot2csv.py
