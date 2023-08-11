@@ -26,7 +26,7 @@ RUN addgroup -g 2000 tpot
 RUN addgroup www-data tpot
 
 # Setting up startup script for the services
-RUN sed -i -e 's/^set -e/set -e\ncrond -l 2\n/' /usr/local/bin/httpd-foreground
+RUN sed -i -e 's/^set -e/set -e\ncrond -d 2\n/' /usr/local/bin/httpd-foreground
 
 # Run apache together with cron
 CMD ["/usr/local/bin/httpd-foreground"]
