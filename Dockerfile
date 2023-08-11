@@ -15,7 +15,7 @@ WORKDIR /opt/tpot2csv
 COPY query.json tpot2csv.ini tpot2csv.py ./
 
 # Adding cron job to update feed file
-COPY cronscript /etc/periodic/15min/
+COPY --chmod=755 cronscript /etc/periodic/15min/
 
 # Adding apache configuration
 COPY httpd.conf /usr/local/apache2/conf/
