@@ -15,7 +15,8 @@ WORKDIR /opt/tpot2csv
 COPY query.json tpot2csv.ini tpot2csv.py ./
 
 # Adding cron job to update feed file
-COPY --chmod=755 cronscript /etc/periodic/15min/
+COPY cronscript /etc/periodic/15min/
+RUN chmod 755 /etc/periodic/15min/cronscript /opt/tpot2csv/tpot2csv.py
 
 # Adding apache configuration
 COPY httpd.conf /usr/local/apache2/conf/
@@ -26,7 +27,7 @@ RUN addgroup -g 2000 tpot
 RUN addgroup www-data tpot
 
 # Setting up startup script for the services
-RUN sed -i -e 's/^set -e/set -e\ncrond -d 2\n/' /usr/local/bin/httpd-foreground
+RUN sed -i -e 's/^set -e/set -e\ncrond -d 6\n/' /usr/local/bin/httpd-foreground
 
 # Run apache together with cron
 CMD ["/usr/local/bin/httpd-foreground"]
